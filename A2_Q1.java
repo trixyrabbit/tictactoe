@@ -40,8 +40,13 @@ public class A2_Q1
 
 class TTT
 {
-	int xPlayer, oPlayer = 0;
-	//bool tl,tm,tr,cl,cm,cr,bl,bm,br;
+	int xPlayer, oPlayer = 10;
+	//char tl,tm,tr,cl,cm,cr,bl,bm,br;
+	final char X = 'X';
+	final char O = 'O';
+	final char open = '_';
+	char[] scores =  new char[9]; 
+    char[] moves = new char[9];
 	char[] state = new char[9]; //new char array
 	public TTT(char[] init)
 	{
@@ -51,17 +56,41 @@ class TTT
 		if(validate())
 			println("Valid inital game state.");
 		
+		println("" +results(state));
+		
+		 minimax(state);
+		
 	}
 	
-	
-	public void minmax(char[] state)
+	//optimio!
+	public int minimax(char[] game, char turn)
 	{
-			
-	}
-	
-	public void maxmin(char[] state)
-	{
-			
+		
+		if(results(game) != 0)
+		{
+			return results(game);
+		
+		}
+		int[] scores;
+		int[] moves;
+		
+		for(int i = 0; i<game.length; i++)
+		{
+			//try every move
+			if (game[i] == open)
+			{
+			 char[] temp = copyOf(game, 9); //copy array
+			 temp[i] = x; 					//make a move
+			 minimax(temp, o); 				//recurse
+			}
+		}
+		//if it is  your turn do max calc
+			 if(turn == x)
+			 {
+				 results
+			 }
+			 else 	//if it is their turn do min calculation
+				 
 	}
 	
 	
@@ -107,10 +136,83 @@ class TTT
 		return str;
 	}
 	
-	public void results(char[] state)
+	public int results(char[] game)
 	{
+		//top right
+		//H
+		if(game[0] == game[1] && game[1] == game[2]) //i.e., same char
+		{
+			if(game[0] == 'X') //if its x, then I win
+				return 10;
+			if(game[0] == 'O') // if its y then you win
+				return -10;	
+		}
 		
+		//V
+		if(game[0] == game[3] && game[3] == game[6])
+		{
+			if(game[0] == 'X')
+				return 10;
+			if(game[0] == 'O')
+				return -10;	
+		}
+		//D
+		if(game[0] == game[4] && game[4] == game[8])
+		{
+			if(game[0] == 'X')
+				return 10;
+			if(game[0] == 'O')
+				return -10;	
+		}
 		
+		//bottom right
+		//V
+		if(game[8] == game[5] && game[5] == game[2])
+		{
+			if(game[0] == 'X')
+				return 10;
+			if(game[0] == 'O')
+				return -10;	
+		}
+		
+		//H
+		if(game[8] == game[7] && game[7] == game[6])
+		{
+			if(game[0] == 'X')
+				return 10;
+			if(game[0] == 'O')
+				return -10;	
+		}
+		//other diag
+		//D
+		if(game[6] == game[4] && game[4] == game[2])
+		{
+			if(game[0] == 'X')
+				return 10;
+			if(game[0] == 'O')
+				return -10;	
+		}
+		//cross
+		//V
+		if(game[1] == game[4] && game[4] == game[7])
+		{
+			if(game[0] == 'X')
+				return 10;
+			if(game[0] == 'O')
+				return -10;	
+		}
+		
+		//H
+		if(game[3] == game[4] && game[4] == game[5])
+		{
+			if(game[0] == 'X')
+				return 10;
+			if(game[0] == 'O')
+				return -10;	
+		}
+
+		return 0;
+			
 	}
 	
 	//wrapper for silly java namespaces
@@ -119,7 +221,7 @@ class TTT
 		System.out.println(str);
 	}
 	
-
+	
 	
 	  
 }
